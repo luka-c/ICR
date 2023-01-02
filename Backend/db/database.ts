@@ -148,9 +148,7 @@ export async function insertEvent(event: event): Promise<boolean> {
     }
 
     let dateStartInsert = new Date(event.dateStart);
-    dateStartInsert.setHours(dateStartInsert.getHours() + 1);
     let dateEndInsert = new Date(event.dateEnd);
-    dateEndInsert.setHours(dateEndInsert.getHours() + 1);
     try {
         if(event.recurringEvent === 3) {
             for(let i = 0; i < 30; i++) {                       
@@ -208,7 +206,7 @@ export async function getEvents(userId: number): Promise<eventsReturn[]> {
     const sql = `SELECT * FROM event WHERE id_user = ${userId} ORDER BY datestart ASC`;
     let eventsData = (await pool.query(sql)).rows;
     let events: eventsReturn[] = [];
-    eventsData.forEach(element => {
+    eventsData.forEach(element => {        
         const event: eventsReturn = {
             eventId: element.id_event,
             dateStart: element.datestart,

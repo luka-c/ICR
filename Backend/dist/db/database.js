@@ -134,9 +134,7 @@ function insertEvent(event) {
             lastRecurringId += 1;
         }
         let dateStartInsert = new Date(event.dateStart);
-        dateStartInsert.setHours(dateStartInsert.getHours() + 1);
         let dateEndInsert = new Date(event.dateEnd);
-        dateEndInsert.setHours(dateEndInsert.getHours() + 1);
         try {
             if (event.recurringEvent === 3) {
                 for (let i = 0; i < 30; i++) {

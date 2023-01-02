@@ -1,0 +1,77 @@
+/register 
+	- POST
+	- input
+		type user = {
+    			email: string,
+    			password: string,
+ 			name: string,
+			surname: string
+		};
+	- return 
+		type userReturn = {
+    			userId: number,
+			email: string,
+    			name: string,
+    			surname: string
+		}; 
+		ili null ako je email vec koristen
+/login
+	- POST
+	- input
+		{ email: string, password: string }
+	- return
+		type userReturn = {
+    			userId: number,
+			email: string,
+    			name: string,
+    			surname: string
+		}; 
+		ili null ako su krivi credentials
+
+tipovi eventa:
+	0 - Reminder
+	1 - Holiday
+	2 - Birthday
+	3 - Task
+
+recurring eventi:
+	null
+	0 - daily
+	1 - weekly
+	2 - monthly 
+	3 - annual
+	
+/insertEvent
+	- POST
+	- input 
+		type event = {
+    			dateStart: Date,
+    			dateEnd: Date,
+    			name: string,
+    			description: string,
+    			eventTypeId: number,
+    			userId: number,
+    			recurringId: number
+		}
+	- return 
+		boolean ( true (uspjeh), false (greska) )
+
+/getEvents/:userId 
+	- GET
+	- return 
+		- lista ( prazna ili eventReturn )
+		- type eventsReturn = {
+    			eventId: number,
+    			dateStart: Date,
+    			dateEnd: Date,
+    			name: string,
+    			description: string,
+    			eventTypeId: number,
+    			recurringId: number
+		}
+
+/deleteEvent/:eventId
+	- DELETE
+	- return
+		boolean ( true (uspjeh), false (greska) )
+	

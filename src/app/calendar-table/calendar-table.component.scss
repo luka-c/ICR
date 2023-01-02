@@ -1,0 +1,53 @@
+div {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+full-calendar {
+  margin-top: 4rem;
+  width: 80%;
+}
+
+full-calendar::ng-deep {
+  div.fc-daygrid-event-harness {
+    cursor: pointer !important;
+
+    &:hover {
+      background-color: #EDAE49;
+      color: white;
+    }
+  }
+
+  button.fc-button {
+    background-color: #344966;
+    border: 1px solid #344966;
+
+    &.fc-add-button {
+      background-color: #EDAE49;
+      border: 1px solid #EDAE49;
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+
+    &:hover {
+      background-color: #0D1821;
+      border: 1px solid #0D1821;
+    }
+
+  }
+
+  button.fc-button-primary:not(:disabled).fc-button-active {
+    background-color: #EDAE49;
+    border: 1px solid #EDAE49;
+
+    &:hover {
+      background-color: #0D1821;
+      border: 1px solid #0D1821;
+    }
+  }
+}
+
+
+
+

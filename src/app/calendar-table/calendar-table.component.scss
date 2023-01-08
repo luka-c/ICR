@@ -2,21 +2,49 @@ div {
   display: flex;
   width: 100%;
   justify-content: center;
+
+  @media (width < 800px) {
+    width: auto;
+    padding: 0px 0.5rem;
+  }
 }
 
 full-calendar {
   margin-top: 4rem;
   width: 80%;
+
+  @media (width < 800px) {
+    width: 100%;
+  }
 }
 
 full-calendar::ng-deep {
+  div.fc-header-toolbar {
+    @media (width < 800px) {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      row-gap: 0.875rem;
+      align-items: end;
+
+      div.fc-toolbar-chunk:nth-of-type(1) {
+        grid-row: 1;
+      }
+
+      div.fc-toolbar-chunk:nth-of-type(3) {
+        grid-row: 1;
+        justify-self: end;
+      }
+    }
+  }
+
+  div.fc-view-harness {
+    @media (width < 800px) {
+      width: 100%;
+    }
+  }
+
   div.fc-daygrid-event-harness {
     cursor: pointer !important;
-
-    &:hover {
-      background-color: #EDAE49;
-      color: white;
-    }
   }
 
   button.fc-button {

@@ -11,6 +11,7 @@ import {FullCalendarModule} from "@fullcalendar/angular";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { AddModalComponent } from './add-modal/add-modal.component';
 import { HomeComponent } from './home/home.component';
+import { EditModalComponent } from './edit-modal/edit-modal.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { HomeComponent } from './home/home.component';
     LoginComponent,
     HeaderComponent,
     AddModalComponent,
-    HomeComponent
+    HomeComponent,
+    EditModalComponent
   ],
   imports: [
     BrowserModule,

@@ -7,58 +7,62 @@
       </svg>
     </div>
 
-    <div class="group">
-      <div>
-        <label>Title</label>
-        <input type="text">
+    <form #eventForm="ngForm" ngForm="eventForm" (ngSubmit)="addEvent(eventForm)">
+      <div class="group">
+        <div>
+          <label>Title</label>
+          <input type="text" name="name" ngModel required>
+        </div>
+        <div></div>
       </div>
+
+      <div class="group">
+        <div>
+          <label>Start</label>
+          <input type="datetime-local" name="dateStart" ngModel required>
+        </div>
+
+        <div>
+          <label>End</label>
+          <input type="datetime-local" name="dateEnd" ngModel required>
+        </div>
+      </div>
+
+      <div class="group">
+        <div>
+          <label>Repeat</label>
+          <select name="recurringId" ngModel>
+            <option selected value=null>--</option>
+            <option value=0>Every day</option>
+            <option value=1>Every week</option>
+            <option value=2>Every month</option>
+            <option value=3>Every year</option>
+          </select>
+        </div>
+
+        <div>
+          <label>Type</label>
+          <select ngModel name="eventTypeId" required>
+            <option selected value=0>Reminder</option>
+            <option value=1>Holiday</option>
+            <option value=2>Birthday</option>
+            <option value=3>Task</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="desc">
+        <div>
+          <label>Description</label>
+          <textarea rows="9" ngModel name="description"></textarea>
+        </div>
+      </div>
+
+      <br>
+      <button [disabled]="!eventForm.valid">Add event</button>
+    </form>
+    <div class="alert" *ngIf="error">
+      {{"*" + error}}
     </div>
-
-    <div class="group">
-      <div>
-        <label>Start</label>
-        <input type="datetime-local">
-      </div>
-
-      <div>
-        <label>End</label>
-        <input type="datetime-local">
-      </div>
-    </div>
-
-    <div class="group">
-      <div>
-        <label>Repeat</label>
-        <select>
-          <option>--</option>
-          <option>Every day</option>
-          <option>Every week</option>
-          <option>Every month</option>
-          <option>Every year</option>
-        </select>
-      </div>
-
-      <div>
-        <label>Type</label>
-        <select>
-          <option>--</option>
-          <option>Birthday</option>
-          <option>Meeting</option>
-          <option>Holiday</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="desc">
-      <div>
-        <label>Description</label>
-        <textarea rows="9"></textarea>
-      </div>
-    </div>
-
-    <br>
-
-    <button>Add event</button>
-
   </div>
 </div>

@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
 import {NgForm} from "@angular/forms";
 import {Observable} from "rxjs";
-import {AuthResponseData} from "../models/auth-response.model";
 import {AuthService} from "./auth.service";
+import {User} from "../models/user.model";
 
 @Component({
   selector: 'app-login',
@@ -27,24 +27,31 @@ export class LoginComponent {
     const email = form.value.email;
     const password = form.value.password;
     this.error = undefined;
+    let errorString = "";
 
-    // let authObservable: Observable<AuthResponseData>;
-    // if (!this.isLogin) {
-    //   //authObservable = this.authService.signup(email, password);
-    // }
-    // else {
-    //   //authObservable = this.authService.login(email, password);
-    // }
-    //
-    // authObservable.subscribe({
-    //   next: (respData) => {
-    //     console.log(respData);
-    //     this.router.navigate(['/']);
-    //   },
-    //   error: (error) => {
-    //     this.error = error;
-    //   }
-    // });
+    let authObservable: Observable<User>;
+    if (!this.isLogin) {
+      errorString = "Email already exists";
+      const name = form.value.name;
+      const surname = form.value.surname;
+      authObservable = this.authService.signup(email, password, name, surname);
+    }
+    else {
+      errorString = "Invalid credentials";
+      authObservable = this.authService.login(email, password);
+    }
+
+    authObservable.subscribe({
+      next: (respData) => {
+        if (respData === null)
+          throw new Error(errorString)
+        else
+          this.router.navigate(['/']);
+      },
+      error: (error) => {
+        this.error = error;
+      }
+    });
 
     form.reset();
   }

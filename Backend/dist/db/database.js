@@ -15,8 +15,8 @@ const pool = new pg_1.Pool({
     user: 'postgres',
     host: 'localhost',
     database: 'Planer',
-    password: 'bazepodataka',
-    port: 5432,
+    password: 'baza',
+    port: 5434,
     ssl: false
 });
 function Register(user) {
@@ -138,7 +138,7 @@ function insertEvent(event) {
         try {
             if (event.recurringEvent === 3) {
                 for (let i = 0; i < 30; i++) {
-                    let sql = `INSERT INTO event VALUES ('${dateStartInsert.toISOString()}','${dateEndInsert.toISOString()}', 
+                    let sql = `INSERT INTO event VALUES ('${dateStartInsert.toISOString()}','${dateEndInsert.toISOString()}',
                     '${event.description}', '${event.name}', ${lastEventId}, ${event.eventTypeId}, ${event.userId}, ${lastRecurringId})`;
                     yield pool.query(sql);
                     dateStartInsert.setFullYear(dateStartInsert.getFullYear() + 1);
@@ -148,7 +148,7 @@ function insertEvent(event) {
             }
             else if (event.recurringEvent === 2) {
                 for (let i = 0; i < 240; i++) {
-                    let sql = `INSERT INTO event VALUES ('${dateStartInsert.toISOString()}','${dateEndInsert.toISOString()}', 
+                    let sql = `INSERT INTO event VALUES ('${dateStartInsert.toISOString()}','${dateEndInsert.toISOString()}',
                     '${event.description}', '${event.name}', ${lastEventId}, ${event.eventTypeId}, ${event.userId}, ${lastRecurringId})`;
                     yield pool.query(sql);
                     dateStartInsert.setMonth(dateStartInsert.getMonth() + 1);
@@ -158,7 +158,7 @@ function insertEvent(event) {
             }
             else if (event.recurringEvent === 1) {
                 for (let i = 0; i < 520; i++) {
-                    let sql = `INSERT INTO event VALUES ('${dateStartInsert.toISOString()}','${dateEndInsert.toISOString()}', 
+                    let sql = `INSERT INTO event VALUES ('${dateStartInsert.toISOString()}','${dateEndInsert.toISOString()}',
                     '${event.description}', '${event.name}', ${lastEventId}, ${event.eventTypeId}, ${event.userId}, ${lastRecurringId})`;
                     yield pool.query(sql);
                     dateStartInsert.setDate(dateStartInsert.getDate() + 7);
@@ -168,7 +168,7 @@ function insertEvent(event) {
             }
             else if (event.recurringEvent === 0) {
                 for (let i = 0; i < 3652; i++) {
-                    let sql = `INSERT INTO event VALUES ('${dateStartInsert.toISOString()}','${dateEndInsert.toISOString()}', 
+                    let sql = `INSERT INTO event VALUES ('${dateStartInsert.toISOString()}','${dateEndInsert.toISOString()}',
                     '${event.description}', '${event.name}', ${lastEventId}, ${event.eventTypeId}, ${event.userId}, ${lastRecurringId})`;
                     yield pool.query(sql);
                     dateStartInsert.setDate(dateStartInsert.getDate() + 1);
@@ -177,13 +177,15 @@ function insertEvent(event) {
                 }
             }
             else {
-                let sql = `INSERT INTO event VALUES ('${event.dateStart}','${event.dateEnd}', 
+                let sql = `INSERT INTO event VALUES ('${event.dateStart}','${event.dateEnd}',
                 '${event.description}', '${event.name}', ${lastEventId}, ${event.eventTypeId}, ${event.userId}, null)`;
+                console.log(sql);
                 yield pool.query(sql);
             }
             return true;
         }
-        catch (_a) {
+        catch (error) {
+            console.log(error);
             return false;
         }
     });

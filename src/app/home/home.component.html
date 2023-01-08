@@ -1,23 +1,23 @@
 <div class="container">
   <h1>Today's events</h1>
-
-  <div>
-    <span class="time" style="background: limegreen; border: 1px solid limegreen">All day</span>
-    <span class="desc">John's birthday</span>
-  </div>
-
-  <div>
-    <span class="time" style="background: crimson; border: 1px solid crimson">10:30</span>
-    <span class="desc">Meeting with the client</span>
-  </div>
-
-  <div>
-    <span class="time">14:00</span>
-    <span class="desc">Lunch with friends</span>
-  </div>
-
-  <div>
-    <span class="time">18:00</span>
-    <span class="desc">Go to the hair dresser</span>
+  <ng-container *ngIf="data.length > 0">
+    <div *ngFor="let value of data">
+      <span class="time"
+            [style.background-color]="getColor(value.eventTypeId)"
+            [style.border-color]="getColor(value.eventTypeId)">
+        {{
+          checkAllDay(value.dateStart, value.dateEnd) === false
+          ?
+          getDate(value.dateStart).getHours() + ":"  +
+            (getDate(value.dateStart).getMinutes() == 0 ? "00" : getDate(value.dateStart).getMinutes())
+          :
+          "All day"
+        }}
+      </span>
+      <span class="desc">{{value.description}}</span>
+    </div>
+  </ng-container>
+  <div *ngIf="data.length == 0">
+    There are no events scheduled for today
   </div>
 </div>

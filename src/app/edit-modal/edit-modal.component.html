@@ -1,0 +1,91 @@
+<div class="background" [ngStyle]="isVisible.value == false ? {'display' : 'none'} : {}">
+  <div class="modal">
+    <div class="heading">
+      <h2>View event</h2>
+      <svg (click)="isVisible.next(false)" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
+      </svg>
+    </div>
+
+    <form [formGroup]="form" (submit)="editEvent()">
+      <div class="group">
+        <div>
+          <label>Title</label>
+          <input type="text" formControlName="name">
+        </div>
+        <div></div>
+      </div>
+
+      <div class="group">
+        <div>
+          <label>Start</label>
+          <input type="datetime-local" formControlName="dateStart">
+        </div>
+
+        <div>
+          <label>End</label>
+          <input type="datetime-local" formControlName="dateEnd">
+        </div>
+      </div>
+
+      <div class="group">
+        <div>
+          <label>Repeat</label>
+          <select formControlName="recurringId">
+            <option selected value=null>--</option>
+            <option value=0>Every day</option>
+            <option value=1>Every week</option>
+            <option value=2>Every month</option>
+            <option value=3>Every year</option>
+          </select>
+        </div>
+
+        <div>
+          <label>Type</label>
+          <select formControlName="eventTypeId">
+            <option selected value=0>Reminder</option>
+            <option value=1>Holiday</option>
+            <option value=2>Birthday</option>
+            <option value=3>Task</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="desc">
+        <div>
+          <label>Description</label>
+          <textarea rows="9" formControlName="description"></textarea>
+        </div>
+      </div>
+
+      <br>
+      <div [ngStyle]="!isEditable ? { 'display': 'none' }
+           : { 'display': 'flex', 'justify-content': 'flex-start', 'gap': '5px' }">
+        <button style="background-color: #FF1654; border: 1px solid #FF1654"
+                (click)="cancel()">
+          Cancel
+        </button>
+        <button
+          [disabled]="form.invalid">
+          Save changes
+        </button>
+      </div>
+
+      <div [ngStyle]="isEditable? { 'display': 'none' }
+           : { 'display': 'flex', 'justify-content': 'flex-start', 'gap': '5px' }">
+        <button
+          (click)="toggleEdit()">
+          Edit
+        </button>
+        <button style="background-color: #FF1654; border: 1px solid #FF1654;" (click)="delete()">Delete</button>
+      </div>
+
+    </form>
+
+    <div class="alert" *ngIf="error">
+      {{"*" + error}}
+    </div>
+
+  </div>
+</div>
+

@@ -5,12 +5,22 @@
 
       <div class="form-group">
         <label for="email">E-mail</label>
-        <input type="email" id="email" name="email" ngModel required email>
+        <input type="email" id="email" name="email" ngModel required>
       </div>
 
       <div class="form-group">
         <label for="password">Password</label>
         <input type="password" id="password"  name="password" ngModel required minlength="6">
+      </div>
+
+      <div class="form-group" *ngIf="!isLogin">
+        <label for="name">Name</label>
+        <input type="text" id="name"  name="name" ngModel required>
+      </div>
+
+      <div class="form-group" *ngIf="!isLogin">
+        <label for="surname">Surname</label>
+        <input type="text" id="surname"  name="surname" ngModel required>
       </div>
 
       <div class="btn-group">

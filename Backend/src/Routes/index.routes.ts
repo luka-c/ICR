@@ -30,4 +30,9 @@ export const register = ( server: express.Application ) => {
         let result = await baza.deleteEvent(req.params.eventId);
         res.json(result);
     });
+
+    server.put("/editEvent", async ( req: any, res ) => {
+        let result = await baza.editEvent(req.body);
+        res.json(result);
+    });
 };

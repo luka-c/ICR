@@ -9,14 +9,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteEvent = exports.isRecurring = exports.getEvents = exports.insertEvent = exports.getLastRecurringId = exports.getLastEventId = exports.getEmails = exports.getLastUserId = exports.Login = exports.Register = void 0;
+exports.editEvent = exports.deleteEvent = exports.isRecurring = exports.getEvents = exports.insertEvent = exports.getLastRecurringId = exports.getLastEventId = exports.getEmails = exports.getLastUserId = exports.Login = exports.Register = void 0;
 const pg_1 = require("pg");
 const pool = new pg_1.Pool({
     user: 'postgres',
     host: 'localhost',
     database: 'Planer',
-    password: 'baza',
-    port: 5434,
+    password: 'bazepodataka',
+    port: 5432,
     ssl: false
 });
 function Register(user) {
@@ -106,7 +106,7 @@ function getLastEventId() {
 exports.getLastEventId = getLastEventId;
 function getLastRecurringId() {
     return __awaiter(this, void 0, void 0, function* () {
-        const sql = `SELECT id_recurring FROM event ORDER BY id_recurring DESC LIMIT 1`;
+        const sql = `SELECT id_recurring FROM event WHERE id_recurring IS NOT NULL ORDER BY id_recurring DESC LIMIT 1`;
         let lastRecurringId = (yield pool.query(sql)).rows[0];
         if (lastRecurringId !== undefined) {
             return lastRecurringId.id_recurring;
@@ -119,6 +119,7 @@ function getLastRecurringId() {
 exports.getLastRecurringId = getLastRecurringId;
 function insertEvent(event) {
     return __awaiter(this, void 0, void 0, function* () {
+        console.log(event);
         let lastEventId = yield getLastEventId();
         if (lastEventId === null) {
             lastEventId = 0;
@@ -136,56 +137,54 @@ function insertEvent(event) {
         let dateStartInsert = new Date(event.dateStart);
         let dateEndInsert = new Date(event.dateEnd);
         try {
-            if (event.recurringEvent === 3) {
+            if (event.recurringTypeId === 3) {
                 for (let i = 0; i < 30; i++) {
-                    let sql = `INSERT INTO event VALUES ('${dateStartInsert.toISOString()}','${dateEndInsert.toISOString()}',
-                    '${event.description}', '${event.name}', ${lastEventId}, ${event.eventTypeId}, ${event.userId}, ${lastRecurringId})`;
-                    yield pool.query(sql);
+                    let sql = `INSERT INTO event VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`;
+                    yield pool.query(sql, [dateStartInsert.toISOString(), dateEndInsert.toISOString(), event.description,
+                        event.name, lastEventId, event.eventTypeId, event.userId, lastRecurringId, event.recurringTypeId]);
                     dateStartInsert.setFullYear(dateStartInsert.getFullYear() + 1);
                     dateEndInsert.setFullYear(dateEndInsert.getFullYear() + 1);
                     lastEventId += 1;
                 }
             }
-            else if (event.recurringEvent === 2) {
+            else if (event.recurringTypeId === 2) {
                 for (let i = 0; i < 240; i++) {
-                    let sql = `INSERT INTO event VALUES ('${dateStartInsert.toISOString()}','${dateEndInsert.toISOString()}',
-                    '${event.description}', '${event.name}', ${lastEventId}, ${event.eventTypeId}, ${event.userId}, ${lastRecurringId})`;
-                    yield pool.query(sql);
+                    let sql = `INSERT INTO event VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`;
+                    yield pool.query(sql, [dateStartInsert.toISOString(), dateEndInsert.toISOString(), event.description,
+                        event.name, lastEventId, event.eventTypeId, event.userId, lastRecurringId, event.recurringTypeId]);
                     dateStartInsert.setMonth(dateStartInsert.getMonth() + 1);
                     dateEndInsert.setMonth(dateEndInsert.getMonth() + 1);
                     lastEventId += 1;
                 }
             }
-            else if (event.recurringEvent === 1) {
+            else if (event.recurringTypeId === 1) {
                 for (let i = 0; i < 520; i++) {
-                    let sql = `INSERT INTO event VALUES ('${dateStartInsert.toISOString()}','${dateEndInsert.toISOString()}',
-                    '${event.description}', '${event.name}', ${lastEventId}, ${event.eventTypeId}, ${event.userId}, ${lastRecurringId})`;
-                    yield pool.query(sql);
+                    let sql = `INSERT INTO event VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`;
+                    yield pool.query(sql, [dateStartInsert.toISOString(), dateEndInsert.toISOString(), event.description,
+                        event.name, lastEventId, event.eventTypeId, event.userId, lastRecurringId, event.recurringTypeId]);
                     dateStartInsert.setDate(dateStartInsert.getDate() + 7);
                     dateEndInsert.setDate(dateEndInsert.getDate() + 7);
                     lastEventId += 1;
                 }
             }
-            else if (event.recurringEvent === 0) {
+            else if (event.recurringTypeId === 0) {
                 for (let i = 0; i < 3652; i++) {
-                    let sql = `INSERT INTO event VALUES ('${dateStartInsert.toISOString()}','${dateEndInsert.toISOString()}',
-                    '${event.description}', '${event.name}', ${lastEventId}, ${event.eventTypeId}, ${event.userId}, ${lastRecurringId})`;
-                    yield pool.query(sql);
+                    let sql = `INSERT INTO event VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`;
+                    yield pool.query(sql, [dateStartInsert.toISOString(), dateEndInsert.toISOString(), event.description,
+                        event.name, lastEventId, event.eventTypeId, event.userId, lastRecurringId, event.recurringTypeId]);
                     dateStartInsert.setDate(dateStartInsert.getDate() + 1);
                     dateEndInsert.setDate(dateEndInsert.getDate() + 1);
                     lastEventId += 1;
                 }
             }
             else {
-                let sql = `INSERT INTO event VALUES ('${event.dateStart}','${event.dateEnd}',
-                '${event.description}', '${event.name}', ${lastEventId}, ${event.eventTypeId}, ${event.userId}, null)`;
-                console.log(sql);
-                yield pool.query(sql);
+                let sql = `INSERT INTO event VALUES ($1, $2, $3, $4, $5, $6, $7, null, null)`;
+                yield pool.query(sql, [dateStartInsert.toISOString(), dateEndInsert.toISOString(), event.description,
+                    event.name, lastEventId, event.eventTypeId, event.userId]);
             }
             return true;
         }
         catch (error) {
-            console.log(error);
             return false;
         }
     });
@@ -204,7 +203,8 @@ function getEvents(userId) {
                 name: element.name,
                 description: element.description,
                 eventTypeId: element.id_eventtype,
-                recurringId: element.id_recurring
+                recurringId: element.id_recurring,
+                recurringTypeId: element.id_reccuringType
             };
             events.push(event);
         });
@@ -243,4 +243,18 @@ function deleteEvent(eventId) {
     });
 }
 exports.deleteEvent = deleteEvent;
+function editEvent(event) {
+    return __awaiter(this, void 0, void 0, function* () {
+        let resDelete = yield deleteEvent(event.eventId);
+        if (resDelete) {
+            let resInsert = yield insertEvent(event);
+            if (resInsert) {
+                return true;
+            }
+            return false;
+        }
+        return false;
+    });
+}
+exports.editEvent = editEvent;
 //# sourceMappingURL=database.js.map

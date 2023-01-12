@@ -51,7 +51,7 @@ recurring eventi:
     			description: string,
     			eventTypeId: number,
     			userId: number,
-    			recurringId: number
+    			recurringTypeId: number
 		}
 	- return 
 		boolean ( true (uspjeh), false (greska) )
@@ -67,11 +67,29 @@ recurring eventi:
     			name: string,
     			description: string,
     			eventTypeId: number,
-    			recurringId: number
+    			recurringId: number (moze biti null)
+				recurringTypeId: number (moze biti null)
 		}
 
 /deleteEvent/:eventId
 	- DELETE
 	- return
 		boolean ( true (uspjeh), false (greska) )
+
+/editEvent
+	- PUT
+	- input 
+		type event = {
+				eventId: number
+    			dateStart: Date,
+    			dateEnd: Date,
+    			name: string,
+    			description: string,
+    			eventTypeId: number,
+    			userId: number,
+    			recurringTypeId: number
+		}
+	- return 
+		boolean ( true (uspjeh), false (greska) )
+
 	

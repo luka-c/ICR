@@ -35,6 +35,10 @@ const register = (server) => {
         let result = yield baza.deleteEvent(req.params.eventId);
         res.json(result);
     }));
+    server.put("/editEvent", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+        let result = yield baza.editEvent(req.body);
+        res.json(result);
+    }));
 };
 exports.register = register;
 //# sourceMappingURL=index.routes.js.map

@@ -25,11 +25,12 @@ export class EditModalComponent implements OnInit {
 
   initForm() {
     this.form = new FormGroup({
+      "eventId": new FormControl({ value: null, disabled: true }),
       "name": new FormControl({ value: "", disabled: !this.isEditable }, Validators.required),
       "dateStart": new FormControl({ value: "", disabled: !this.isEditable }, Validators.required),
       "dateEnd": new FormControl({ value: "", disabled: !this.isEditable }, Validators.required),
       "userId": new FormControl(this.authService.user.getValue()!.userId, Validators.required),
-      "recurringId": new FormControl({ value: null, disabled: !this.isEditable }),
+      "recurringTypeId": new FormControl({ value: null, disabled: !this.isEditable }),
       "eventTypeId": new FormControl({ value: null, disabled: !this.isEditable }, Validators.required),
       "description": new FormControl({ value: "", disabled: !this.isEditable }, Validators.required)
     })
@@ -39,10 +40,11 @@ export class EditModalComponent implements OnInit {
     this.currentEvent = event;
 
     this.form.patchValue({
+      eventId: event.eventId,
       name: event.name,
       dateStart: this.formatDate(event.dateStart),
       dateEnd: this.formatDate(event.dateEnd),
-      recurringId: event.recurringId,
+      recurringTypeId: event.recurringTypeId,
       eventTypeId: event.eventTypeId,
       description: event.description
     })
@@ -55,6 +57,10 @@ export class EditModalComponent implements OnInit {
       this.error = "Start date cannot be greater than end date."
       return;
     }
+    this.form.patchValue({
+      recurringTypeId: parseInt(this.form.get("recurringTypeId")!.value)
+    })
+
     this.fetchService.editEvent(this.form.value).subscribe(value => {
       if (value) {
         this.isVisible.next(false);
@@ -64,9 +70,12 @@ export class EditModalComponent implements OnInit {
   }
 
   formatDate(oldDate: string): string {
-    const date = (new Date(oldDate)).toISOString();
-    const sliceIndex = date.lastIndexOf(':');
-    return date.slice(0, sliceIndex);
+    const date = new Date(oldDate);
+    const dateString = date.getFullYear()
+    + "-" + ("0" + (date.getMonth() + 1)).slice(-2)
+    + "-" + ("0" + (date.getDate())).slice(-2)
+    + "T" + ("0" + date.getHours()).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2);
+    return dateString;
   }
 
   toggleEdit() {

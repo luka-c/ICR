@@ -13,6 +13,8 @@ export class AddModalComponent implements OnInit{
   isVisible: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   @ViewChild('eventForm', { static: true }) form!: NgForm;
   error: string | undefined;
+  recurringType: string | null = null;
+  eventType: number = 0;
 
   constructor(private fetchService: FetchService, private authService: AuthService) { }
 
@@ -36,8 +38,8 @@ export class AddModalComponent implements OnInit{
       dateStart: form.value.dateStart,
       dateEnd: form.value.dateEnd,
       userId: this.authService.user.getValue()!.userId,
-      recurringId: form.value.recurringId,
-      eventTypeId: form.value.eventTypeId,
+      recurringTypeId: parseInt(form.value.recurringTypeId),
+      eventTypeId: parseInt(form.value.eventTypeId),
       description: form.value.description
     }).subscribe((val) => {
       if (val) {

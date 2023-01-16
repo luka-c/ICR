@@ -31,8 +31,8 @@
       <div class="group">
         <div>
           <label>Repeat</label>
-          <select formControlName="recurringId">
-            <option selected value=null>--</option>
+          <select formControlName="recurringTypeId">
+            <option value=null>Never</option>
             <option value=0>Every day</option>
             <option value=1>Every week</option>
             <option value=2>Every month</option>
@@ -43,7 +43,7 @@
         <div>
           <label>Type</label>
           <select formControlName="eventTypeId">
-            <option selected value=0>Reminder</option>
+            <option value=0>Reminder</option>
             <option value=1>Holiday</option>
             <option value=2>Birthday</option>
             <option value=3>Task</option>
@@ -62,7 +62,7 @@
       <div [ngStyle]="!isEditable ? { 'display': 'none' }
            : { 'display': 'flex', 'justify-content': 'flex-start', 'gap': '5px' }">
         <button style="background-color: #FF1654; border: 1px solid #FF1654"
-                (click)="cancel()">
+                (click)="cancel()" type="button">
           Cancel
         </button>
         <button
@@ -74,7 +74,7 @@
       <div [ngStyle]="isEditable? { 'display': 'none' }
            : { 'display': 'flex', 'justify-content': 'flex-start', 'gap': '5px' }">
         <button
-          (click)="toggleEdit()">
+          (click)="toggleEdit()" type="button">
           Edit
         </button>
         <button style="background-color: #FF1654; border: 1px solid #FF1654;" (click)="delete()">Delete</button>

@@ -15,8 +15,8 @@ const pool = new pg_1.Pool({
     user: 'postgres',
     host: 'localhost',
     database: 'Planer',
-    password: 'bazepodataka',
-    port: 5432,
+    password: 'baza',
+    port: 5434,
     ssl: false
 });
 function Register(user) {
@@ -119,7 +119,6 @@ function getLastRecurringId() {
 exports.getLastRecurringId = getLastRecurringId;
 function insertEvent(event) {
     return __awaiter(this, void 0, void 0, function* () {
-        console.log(event);
         let lastEventId = yield getLastEventId();
         if (lastEventId === null) {
             lastEventId = 0;

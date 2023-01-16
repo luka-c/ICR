@@ -14,12 +14,12 @@ export class FetchService {
     return this.http.get<EventModel[]>(this.host + "getEvents/" + user_id)
   }
 
-  postEvent(event: Omit<EventModel, "eventId">) {
+  postEvent(event: Omit<EventModel, "eventId" | "recurringId">) {
 
     return this.http.post<boolean>(this.host + "insertEvent", event)
   }
 
-  editEvent(event: EventModel) {
+  editEvent(event: Omit<EventModel, "recurringId">) {
     return this.http.put(this.host + "editEvent/", event);
   }
 

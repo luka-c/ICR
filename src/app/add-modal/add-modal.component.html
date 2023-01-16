@@ -31,8 +31,8 @@
       <div class="group">
         <div>
           <label>Repeat</label>
-          <select name="recurringId" ngModel>
-            <option selected value=null>--</option>
+          <select name="recurringTypeId" [(ngModel)]="recurringType">
+            <option value=null>Never</option>
             <option value=0>Every day</option>
             <option value=1>Every week</option>
             <option value=2>Every month</option>
@@ -42,7 +42,7 @@
 
         <div>
           <label>Type</label>
-          <select ngModel name="eventTypeId" required>
+          <select ngModel name="eventTypeId" [(ngModel)]="eventType" required>
             <option selected value=0>Reminder</option>
             <option value=1>Holiday</option>
             <option value=2>Birthday</option>

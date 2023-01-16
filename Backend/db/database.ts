@@ -4,8 +4,8 @@ const pool = new Pool({
     user: 'postgres',
     host: 'localhost',
     database: 'Planer',
-    password: 'bazepodataka',
-    port: 5432,
+    password: 'baza',
+    port: 5434,
     ssl : false
 });
 
@@ -154,7 +154,7 @@ export async function insertEvent(event: event): Promise<boolean> {
         if(event.recurringTypeId === 3) {
             for(let i = 0; i < 30; i++) {
                 let sql = `INSERT INTO event VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`
-                await pool.query(sql, [dateStartInsert.toISOString(), dateEndInsert.toISOString(), event.description, 
+                await pool.query(sql, [dateStartInsert.toISOString(), dateEndInsert.toISOString(), event.description,
                     event.name, lastEventId, event.eventTypeId, event.userId, lastRecurringId, event.recurringTypeId]);
                 dateStartInsert.setFullYear(dateStartInsert.getFullYear() + 1);
                 dateEndInsert.setFullYear(dateEndInsert.getFullYear() + 1);
@@ -164,7 +164,7 @@ export async function insertEvent(event: event): Promise<boolean> {
         else if (event.recurringTypeId === 2) {
             for(let i = 0; i < 240; i++) {
                 let sql = `INSERT INTO event VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`
-                await pool.query(sql, [dateStartInsert.toISOString(), dateEndInsert.toISOString(), event.description, 
+                await pool.query(sql, [dateStartInsert.toISOString(), dateEndInsert.toISOString(), event.description,
                     event.name, lastEventId, event.eventTypeId, event.userId, lastRecurringId, event.recurringTypeId]);
                 dateStartInsert.setMonth(dateStartInsert.getMonth() + 1);
                 dateEndInsert.setMonth(dateEndInsert.getMonth() + 1);
@@ -174,7 +174,7 @@ export async function insertEvent(event: event): Promise<boolean> {
         else if (event.recurringTypeId === 1) {
             for(let i = 0; i < 520; i++) {
                 let sql = `INSERT INTO event VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`
-                await pool.query(sql, [dateStartInsert.toISOString(), dateEndInsert.toISOString(), event.description, 
+                await pool.query(sql, [dateStartInsert.toISOString(), dateEndInsert.toISOString(), event.description,
                     event.name, lastEventId, event.eventTypeId, event.userId, lastRecurringId, event.recurringTypeId]);
                 dateStartInsert.setDate(dateStartInsert.getDate() + 7);
                 dateEndInsert.setDate(dateEndInsert.getDate() + 7);
@@ -184,7 +184,7 @@ export async function insertEvent(event: event): Promise<boolean> {
         else if (event.recurringTypeId === 0) {
             for(let i = 0; i < 3652; i++) {
                 let sql = `INSERT INTO event VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`
-                await pool.query(sql, [dateStartInsert.toISOString(), dateEndInsert.toISOString(), event.description, 
+                await pool.query(sql, [dateStartInsert.toISOString(), dateEndInsert.toISOString(), event.description,
                     event.name, lastEventId, event.eventTypeId, event.userId, lastRecurringId, event.recurringTypeId]);
                 dateStartInsert.setDate(dateStartInsert.getDate() + 1);
                 dateEndInsert.setDate(dateEndInsert.getDate() + 1);
@@ -193,7 +193,7 @@ export async function insertEvent(event: event): Promise<boolean> {
         }
         else {
             let sql = `INSERT INTO event VALUES ($1, $2, $3, $4, $5, $6, $7, null, null)`
-            await pool.query(sql, [dateStartInsert.toISOString(), dateEndInsert.toISOString(), event.description, 
+            await pool.query(sql, [dateStartInsert.toISOString(), dateEndInsert.toISOString(), event.description,
                 event.name, lastEventId, event.eventTypeId, event.userId]);
         }
         return true;
@@ -260,5 +260,5 @@ export async function editEvent(event: event & {eventId: number}): Promise<boole
         }
         return false;
     }
-    return false;    
+    return false;
 }

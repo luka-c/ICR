@@ -4,11 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "npm-run-all clean tsc",
-    "clean": "rimraf dist",
-    "tsc": "tsc",
+    "build": "npm run clean; tsc;",
+    "clean": "rm -rf dist",
     "start": "node dist/src/index.js",
-    "dev": "npm-run-all build start"
+    "dev": "npm run build; npm start"
   },
   "author": "Ivan Špoljar, Luka Čičak, Petar-Gabrijel Kedmenec",
   "license": "ISC",

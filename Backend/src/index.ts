@@ -6,7 +6,7 @@ import cors from "cors";
 const server = express();
 const port = 8080;
 
-server.use(cors({ origin: "*", methods: ["GET", "POST", "DELETE"] } ));
+server.use(cors({ origin: "*", methods: ["GET", "POST", "DELETE", "PUT"] } ));
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded( {extended: false}) );
 

@@ -32,7 +32,7 @@ const routesIndex = __importStar(require("./routes/index.routes"));
 const cors_1 = __importDefault(require("cors"));
 const server = (0, express_1.default)();
 const port = 8080;
-server.use((0, cors_1.default)({ origin: "*", methods: ["GET", "POST", "DELETE"] }));
+server.use((0, cors_1.default)({ origin: "*", methods: ["GET", "POST", "DELETE", "PUT"] }));
 server.use(body_parser_1.default.json());
 server.use(body_parser_1.default.urlencoded({ extended: false }));
 routesIndex.register(server);

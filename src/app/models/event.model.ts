@@ -6,7 +6,8 @@ export interface EventModel {
   description: string,
   eventTypeId: EventType,
   userId: number,
-  recurringId: ReccuringType | null
+  recurringTypeId?: ReccuringType
+  recurringId?: number
 }
 
 export enum EventType {

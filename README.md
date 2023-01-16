@@ -9,14 +9,14 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The appli
 
 ## (Backend) package.json scripts
 
-- Windows
-  "build": "npm-run-all clean tsc",
-  "clean": "rimraf dist",
-  "tsc": "tsc",
-  "start": "node dist/src/index.js",
-  "dev": "npm-run-all build start"
-- MacOS/Linux
-  "build": "npm run clean; tsc;",
-  "clean": "rm -rf dist",
-  "start": "node dist/src/index.js",
-  "dev": "npm run build; npm start"
+### Windows
+  - "build": "npm-run-all clean tsc",
+  - "clean": "rimraf dist",
+  - "tsc": "tsc",
+  - "start": "node dist/src/index.js",
+  - "dev": "npm-run-all build start"
+### MacOS/Linux
+  - "build": "npm run clean; tsc;",
+  - "clean": "rm -rf dist",
+  - "start": "node dist/src/index.js",
+  - "dev": "npm run build; npm start"
